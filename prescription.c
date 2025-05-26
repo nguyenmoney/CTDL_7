@@ -1,4 +1,4 @@
-﻿#include "prescription.h"
+#include "prescription.h"
 #include "medicine.h"    
 #include "csv_handler.h" 
 #include "ui.h"
@@ -234,9 +234,10 @@ void inChiTietMotDonThuocConsole(int maDonThuoc,
     for (int i = 0; i < soLuongDongTongCong; ++i) {
         if (dsDonThuocChiTiet[i].maDonThuocChiTiet == maDonThuoc) {
             if (!timThayDon) {
-                printf("----------------------------------------------------------------------------------------------------\n");
-                printf("| %-3s | %-15s | %-30s | %-7s | %-20s | %-20s |\n", "STT", "Ma Thuoc", "Ten Thuoc", "So Luong", "Lieu Dung", "Cach Dung");
-                printf("----------------------------------------------------------------------------------------------------\n");
+                printf("-----------------------------------------------------------------------------------------------------------------------------------------\n");
+                printf("| %-4s | %-20s | %-35s | %-10s | %-25s | %-25s |\n", "STT", "Ma Thuoc", "Ten Thuoc", "So Luong", "Lieu Dung", "Cach Dung");
+                printf("-----------------------------------------------------------------------------------------------------------------------------------------\n");
+
                 timThayDon = 1;
             }
             stt++;
@@ -247,7 +248,7 @@ void inChiTietMotDonThuocConsole(int maDonThuoc,
                 tenThuocHienThi[150] = '\0';
             }
 
-            printf("| %-3d | %-15s | %-30.30s | %-7d | %-20.20s | %-20.20s |\n",
+            printf("| %-4d | %-20.20s | %-35.35s | %-10d | %-25.25s | %-25.25s |\n",
                 stt,
                 dsDonThuocChiTiet[i].maThuoc,
                 tenThuocHienThi,
@@ -261,7 +262,7 @@ void inChiTietMotDonThuocConsole(int maDonThuoc,
         printf("Khong co chi tiet nao cho don thuoc ma %d hoac don thuoc khong ton tai.\n", maDonThuoc);
     }
     else {
-        printf("----------------------------------------------------------------------------------------------------\n");
+        printf("-----------------------------------------------------------------------------------------------------------------------------------------\n");
     }
 }
 
@@ -273,9 +274,9 @@ void inTatCaDonThuocChiTietConsole(const DonThuocChiTiet dsDonThuocChiTiet[], in
         printf("Khong co chi tiet don thuoc nao.\n");
         return;
     }
-    printf("----------------------------------------------------------------------------------------------------------------------\n");
-    printf("| %-7s | %-15s | %-30s | %-7s | %-20s | %-20s |\n", "Ma DT", "Ma Thuoc", "Ten Thuoc", "So Luong", "Lieu Dung", "Cach Dung");
-    printf("----------------------------------------------------------------------------------------------------------------------\n");
+    printf("-----------------------------------------------------------------------------------------------------------------------------------------\n"); 
+    printf("| %-4s | %-20s | %-35s | %-10s | %-25s | %-25s |\n", "STT", "Ma Thuoc", "Ten Thuoc", "So Luong", "Lieu Dung", "Cach Dung");
+    printf("-----------------------------------------------------------------------------------------------------------------------------------------\n");
 
     for (int i = 0; i < soLuongDong; ++i) {
         const Thuoc* thuocInfo = timThuocTheoMa(dsThuocToanBo, soLuongThuocTB, dsDonThuocChiTiet[i].maThuoc);
@@ -284,7 +285,7 @@ void inTatCaDonThuocChiTietConsole(const DonThuocChiTiet dsDonThuocChiTiet[], in
             strncpy(tenThuocHienThi, thuocInfo->tenThuoc, 150);
             tenThuocHienThi[150] = '\0';
         }
-        printf("| %-7d | %-15s | %-30.30s | %-7d | %-20.20s | %-20.20s |\n",
+        printf("| %-4d | %-20.20s | %-35.35s | %-10d | %-25.25s | %-25.25s |\n",
             dsDonThuocChiTiet[i].maDonThuocChiTiet,
             dsDonThuocChiTiet[i].maThuoc,
             tenThuocHienThi,
@@ -292,8 +293,9 @@ void inTatCaDonThuocChiTietConsole(const DonThuocChiTiet dsDonThuocChiTiet[], in
             dsDonThuocChiTiet[i].lieuDung,
             dsDonThuocChiTiet[i].cachDung);
     }
-    printf("----------------------------------------------------------------------------------------------------------------------\n");
+    printf("-----------------------------------------------------------------------------------------------------------------------------------------\n"); 
 }
+
 
 // Ham cap nhat chi tiet 1 don thuoc
 void quanLyCapNhatChiTietDonThuoc(int maDonThuocDeCapNhat,
