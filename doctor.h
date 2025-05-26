@@ -1,4 +1,4 @@
-﻿#ifndef DOCTOR_H
+#ifndef DOCTOR_H
 #define DOCTOR_H
 
 #include "structs.h"
@@ -6,6 +6,7 @@
 #include <stdio.h>
 
 #define FILE_BAC_SI "data/bacsi.csv"
+// --- Khai bao cac ham tien ich chung ---
 
 BacSi* docDanhSachBacSi(const char* tenFile, int* soLuong);
 
