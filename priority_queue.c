@@ -7,7 +7,7 @@
 #include <string.h>
 #include <ctype.h>
 
-// --- Ham so sánh cho sap xep---
+// --- Ham so sanh cho sap xep---
 static int soSanhUuTienLanKham(const void* a, const void* b) {
     const LanKham* lk1 = (const LanKham*)a;
     const LanKham* lk2 = (const LanKham*)b;
@@ -19,7 +19,7 @@ static int soSanhUuTienLanKham(const void* a, const void* b) {
     return 0;
 }
 
-// --- Triển khai Merge Sort ---
+// --- Trien khai Merge Sort ---
 static void merge(LanKham arr[], int l, int m, int r) {
     int i, j, k;
     int n1 = m - l + 1;
@@ -57,24 +57,7 @@ static void merge(LanKham arr[], int l, int m, int r) {
         k++;
     }
     while (j < n2) {
-        arr[k] = R_arr[j];
-        j++;
-        k++;
-    }
-    free(L_arr);
-    free(R_arr);
-}
-
-static void mergeSort(LanKham arr[], int l, int r) {
-    if (l < r) {
-        int m = l + (r - l) / 2;
-        mergeSort(arr, l, m);
-        mergeSort(arr, m + 1, r);
-        merge(arr, l, m, r);
-    }
-}
-
-// Hàm sắp xếp hàng đợi của một khoa
+        khoa
 static void sapXepHangDoiMotKhoaBangMergeSort(HangDoiUuTienMotKhoa* hqmk) {
     if (hqmk == NULL || hqmk->soLuongHienTai <= 1) {
         return;
@@ -236,7 +219,7 @@ void inHangDoiMotKhoaConsole(BangBam* bbHangDoiTheoKhoa, const char* maKhoaPhong
                     tenBNHienThi[sizeof(tenBNHienThi) - 1] = '\0';
                 }
             }
-            else if (dsBenhNhanToanBo != NULL) { // Fallback nếu không có bbBenhNhan
+            else if (dsBenhNhanToanBo != NULL) { 
                 for (int j = 0; j < soLuongBNTB; ++j) {
                     if (strcmp(dsBenhNhanToanBo[j].maDinhDanh, lk->maDinhDanh) == 0) {
                         strncpy(tenBNHienThi, dsBenhNhanToanBo[j].ten, sizeof(tenBNHienThi) - 1);
