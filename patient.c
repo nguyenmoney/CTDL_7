@@ -141,6 +141,7 @@ BenhNhan* timBenhNhanTheoMaBangBam(BangBam* bb, const char* maDD_str) {
     }
     return (BenhNhan*)timKiemTrongBangBam(bb, maDD_str);
 }
+//Ham nhap thong tin benh nhan
 int nhapThongTinBenhNhanTuBanPhim(BenhNhan* bn, const BenhNhan dsBenhNhanHienCo[], int soLuongHienCo, BangBam* bbBenhNhan) {
     char buffer[1000];
     char maDD_tam_str[MAX_LEN_MA_DINH_DANH_BN];
