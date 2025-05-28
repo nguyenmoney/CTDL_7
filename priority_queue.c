@@ -1,25 +1,26 @@
-﻿#include "priority_queue.h"
-#include "patient.h" 
-#include "examination.h"
-#include "csv_handler.h"
+#include "priority_queue.h"
+#include "patient.h"     
+#include "examination.h" 
+#include "csv_handler.h" 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
+#include <ctype.h>      
 
-// --- Ham so sanh cho sap xep---
+// Ham so sanh cho sap xep
 static int soSanhUuTienLanKham(const void* a, const void* b) {
     const LanKham* lk1 = (const LanKham*)a;
     const LanKham* lk2 = (const LanKham*)b;
 
     if (lk1->mucDoUuTien < lk2->mucDoUuTien) return -1;
     if (lk1->mucDoUuTien > lk2->mucDoUuTien) return 1;
-    if (lk1->gioDangKyThanhCong < lk2->gioDangKyThanhCong) return -1;
+    
+    if (lk1->gioDangKyThanhCong < lk2->gioDangKyThanhCong) return -1; 
     if (lk1->gioDangKyThanhCong > lk2->gioDangKyThanhCong) return 1;
-    return 0;
+    return 0; 
 }
 
-// --- Trien khai Merge Sort ---
+// Trien khai Merge Sort
 static void merge(LanKham arr[], int l, int m, int r) {
     int i, j, k;
     int n1 = m - l + 1;
@@ -55,12 +56,26 @@ static void merge(LanKham arr[], int l, int m, int r) {
         arr[k] = L_arr[i];
         i++;
         k++;
-    }
+    } 
     while (j < n2) {
-            arr[k] = R_arr[j];
-    j++;
-    k++;
+        arr[k] = R_arr[j];
+        j++;
+        k++;
+    }
+    free(L_arr);
+    free(R_arr);
 }
+
+static void mergeSort(LanKham arr[], int l, int r) {
+    if (l < r) {
+        int m = l + (r - l) / 2;
+        mergeSort(arr, l, m);
+        mergeSort(arr, m + 1, r);
+        merge(arr, l, m, r);
+    }
+}
+
+// Ham sap xep cua mot khoa
 static void sapXepHangDoiMotKhoaBangMergeSort(HangDoiUuTienMotKhoa* hqmk) {
     if (hqmk == NULL || hqmk->soLuongHienTai <= 1) {
         return;
@@ -69,9 +84,8 @@ static void sapXepHangDoiMotKhoaBangMergeSort(HangDoiUuTienMotKhoa* hqmk) {
 }
 
 
-// --- Các hàm public của module---
+// Cac ham tong quat cho chuong trinh
 
-//Ham khoi tao hang doi cua mot khoa
 void khoiTaoHangDoiMotKhoa(HangDoiUuTienMotKhoa* hqmk) {
     if (hqmk == NULL) return;
     hqmk->dsChoKham = NULL;
@@ -79,7 +93,6 @@ void khoiTaoHangDoiMotKhoa(HangDoiUuTienMotKhoa* hqmk) {
     hqmk->dungLuong = 0;
 }
 
-//Ham them vao hang doi cua mot khoa
 int themVaoHangDoiTheoKhoa(BangBam* bbHangDoiTheoKhoa, const char* maKhoaPhong, LanKham lanKhamMoi) {
     if (bbHangDoiTheoKhoa == NULL || maKhoaPhong == NULL || strlen(maKhoaPhong) == 0) {
         fprintf(stderr, "LOI (themVaoHangDoiTheoKhoa): Bang bam hang doi hoac maKhoaPhong khong hop le.\n");
@@ -90,7 +103,7 @@ int themVaoHangDoiTheoKhoa(BangBam* bbHangDoiTheoKhoa, const char* maKhoaPhong, 
         return 1;
     }
 
-    char maKPNorm[MAX_LEN_MA_KHOA_PHONG]; // Chuẩn hóa mã khoa phòng
+    char maKPNorm[MAX_LEN_MA_KHOA_PHONG]; 
     strncpy(maKPNorm, maKhoaPhong, sizeof(maKPNorm) - 1);
     maKPNorm[sizeof(maKPNorm) - 1] = '\0';
     for (int i = 0; maKPNorm[i]; ++i) maKPNorm[i] = toupper(maKPNorm[i]);
@@ -117,8 +130,6 @@ int themVaoHangDoiTheoKhoa(BangBam* bbHangDoiTheoKhoa, const char* maKhoaPhong, 
             free(hqmk);
             return 0;
         }
-    
-
     }
 
     for (int i = 0; i < hqmk->soLuongHienTai; ++i) {
@@ -146,7 +157,6 @@ int themVaoHangDoiTheoKhoa(BangBam* bbHangDoiTheoKhoa, const char* maKhoaPhong, 
     return 1;
 }
 
-//Ham goi benh nhan tiep theo(Theo khoa) 
 int layBenhNhanTiepTheoTheoKhoa(BangBam* bbHangDoiTheoKhoa, const char* maKhoaPhong, LanKham* lanKhamLayRa) {
     if (bbHangDoiTheoKhoa == NULL || maKhoaPhong == NULL || strlen(maKhoaPhong) == 0 || lanKhamLayRa == NULL) return 0;
 
@@ -171,7 +181,6 @@ int layBenhNhanTiepTheoTheoKhoa(BangBam* bbHangDoiTheoKhoa, const char* maKhoaPh
     return 1;
 }
 
-//Ham kiem tra hang doi theo khoa co rong khong
 int laHangDoiTheoKhoaRong(BangBam* bbHangDoiTheoKhoa, const char* maKhoaPhong) {
     if (bbHangDoiTheoKhoa == NULL || maKhoaPhong == NULL || strlen(maKhoaPhong) == 0) return 1;
 
@@ -215,14 +224,14 @@ void inHangDoiMotKhoaConsole(BangBam* bbHangDoiTheoKhoa, const char* maKhoaPhong
         char tenBNHienThi[101] = "N/A";
 
         if (strlen(lk->maDinhDanh) > 0) {
-            if (bbBenhNhan) { // Ưu tiên bảng băm bệnh nhân
+            if (bbBenhNhan) { 
                 BenhNhan* bn = timBenhNhanTheoMaBangBam(bbBenhNhan, lk->maDinhDanh);
                 if (bn) {
                     strncpy(tenBNHienThi, bn->ten, sizeof(tenBNHienThi) - 1);
                     tenBNHienThi[sizeof(tenBNHienThi) - 1] = '\0';
                 }
             }
-            else if (dsBenhNhanToanBo != NULL) { 
+            else if (dsBenhNhanToanBo != NULL) {
                 for (int j = 0; j < soLuongBNTB; ++j) {
                     if (strcmp(dsBenhNhanToanBo[j].maDinhDanh, lk->maDinhDanh) == 0) {
                         strncpy(tenBNHienThi, dsBenhNhanToanBo[j].ten, sizeof(tenBNHienThi) - 1);
@@ -263,9 +272,6 @@ void inHangDoiMotKhoaConsole(BangBam* bbHangDoiTheoKhoa, const char* maKhoaPhong
     printf("Tong so benh nhan dang cho tai khoa %s: %d\n", maKPHienThi, hqmk->soLuongHienTai);
 }
 
-//-----Cac ham giai phong bo nho------
-
-// Ham giai phong du lieu hang doi cua mot khoa
 void giaiPhongDuLieuHangDoiMotKhoa(HangDoiUuTienMotKhoa* hqmk) {
     if (hqmk != NULL) {
         free(hqmk->dsChoKham);
@@ -275,7 +281,6 @@ void giaiPhongDuLieuHangDoiMotKhoa(HangDoiUuTienMotKhoa* hqmk) {
     }
 }
 
-//Ham giai phong tat cả hang doi
 void giaiPhongTatCaHangDoiTheoKhoa(BangBam* bbHangDoiTheoKhoa) {
     if (bbHangDoiTheoKhoa == NULL || bbHangDoiTheoKhoa->cacBucket == NULL) {
         return;
@@ -287,10 +292,11 @@ void giaiPhongTatCaHangDoiTheoKhoa(BangBam* bbHangDoiTheoKhoa) {
             HangDoiUuTienMotKhoa* hqmk = (HangDoiUuTienMotKhoa*)nutHienTai->giaTri;
             if (hqmk != NULL) {
                 giaiPhongDuLieuHangDoiMotKhoa(hqmk);
-                free(hqmk);
+                free(hqmk);                    
             }
+
             nutHienTai = nutHienTai->tiepTheo;
         }
     }
-    giaiPhongBangBam(bbHangDoiTheoKhoa);
+    giaiPhongBangBam(bbHangDoiTheoKhoa); 
 }
