@@ -57,7 +57,10 @@ static void merge(LanKham arr[], int l, int m, int r) {
         k++;
     }
     while (j < n2) {
-        khoa
+            arr[k] = R_arr[j];
+    j++;
+    k++;
+}
 static void sapXepHangDoiMotKhoaBangMergeSort(HangDoiUuTienMotKhoa* hqmk) {
     if (hqmk == NULL || hqmk->soLuongHienTai <= 1) {
         return;
